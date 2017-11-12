@@ -22,7 +22,7 @@ status = MPI.Status()
 block = False
 
 
-data = list(range(1000000))
+data = range(1000000)
 
 if rank == 0:
     acc = 0
