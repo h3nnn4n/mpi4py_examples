@@ -56,9 +56,15 @@ r2 = np.linspace(ymin, ymax, img_size)
 
 partial_img = np.empty(shape=(int(img_size/size), img_size), dtype='i')
 
+start = MPI.Wtime()
+
 for i, x in enumerate(r1):
     for j, y in enumerate(r2):
         partial_img[i, j] = mandelbrot(complex(x, y), 255)
+
+finish = MPI.Wtime() - start
+
+print("%2d finished in %f seconds" % (rank, finish))
 
 full_img = comm.gather(partial_img, root=0)
 
