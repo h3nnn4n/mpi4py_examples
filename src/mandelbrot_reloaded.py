@@ -97,7 +97,7 @@ else:
 
             comm.send(('OK', data[0], partial_img), dest=0)
     if block: comm.barrier()
-    if verbose: print("%2d got %d jobs and took %f seconds to complete" % (rank, t, time))
+    if verbose: print("%s %2d got %d jobs and took %f seconds to complete" % (MPI.Get_processor_name(), rank, t, time))
 
 if block: comm.barrier()
 if verbose: print("Process %d has exited" % rank)
