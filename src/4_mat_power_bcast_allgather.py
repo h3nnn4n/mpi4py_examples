@@ -6,7 +6,7 @@ comm = MPI.COMM_WORLD
 size = comm.size
 rank = comm.rank
 
-iters = 10
+iters = 5
 
 scale = 1
 
@@ -28,14 +28,8 @@ if rank != 0 or True:
         for i, i2 in zip(itens, range(scale)):
             for j in range(0, msize):
                 cols[i2, j] = np.inner(mat[i], mat[:, j])
-                # print(np.inner(mat[i], mat[:, j]))
-
-        # if rank == 0:
-            # print(mat)
 
         comm.Allgather(cols, mat)
-
-    # print(rank, cols)
 
 if rank == 0:
     print(mat)
