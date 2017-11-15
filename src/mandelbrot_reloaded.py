@@ -1,5 +1,6 @@
 from mpi4py import MPI
 import numpy as np
+import random
 import sys
 
 comm = MPI.COMM_WORLD
@@ -11,7 +12,11 @@ block = False
 verbose = True
 gnuplot = False
 
-print("Hello from %2d out of %2d" % (rank, size))
+print("%2d/%2d : %15s is up" % (rank, size, MPI.Get_processor_name()))
+
+comm.barrier()
+if rank == 0:
+    print()
 
 img_size = 200 * size
 
@@ -52,6 +57,7 @@ if rank == 0:
     diff = xmax - xmin
     dx = diff / splits
     intervals = [(i, i * dx + xmin, (i+1) * dx + xmin) for i in range(splits)]
+    random.shuffle(intervals)
 
     for d in intervals:
         code, n, result = comm.recv(source=MPI.ANY_SOURCE, status=status)
@@ -100,7 +106,7 @@ else:
     if verbose: print("%20s %2d %4d %3.2f" % (MPI.Get_processor_name(), rank, t, time))
 
 if block: comm.barrier()
-if verbose: print("Process %d has exited" % rank)
+# if verbose: print("Process %d has exited" % rank)
 
 if rank == 0:
     img = full_img[0].reshape(int(img_size / splits), img_size)
