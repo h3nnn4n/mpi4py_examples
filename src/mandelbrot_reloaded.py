@@ -11,12 +11,18 @@ status = MPI.Status()
 block = False
 verbose = True
 gnuplot = False
+shuff = False
+comm.barrier()
+
+if rank == 0:
+    print("Online nodes")
 
 print("%2d/%2d : %15s is up" % (rank, size, MPI.Get_processor_name()))
 
 comm.barrier()
 if rank == 0:
     print()
+    print("Finished nodes")
 
 img_size = 200 * size
 
