@@ -8,8 +8,10 @@ rank = comm.rank
 status = MPI.Status()
 
 block = False
-verbose = False
-gnuplot = True
+verbose = True
+gnuplot = False
+
+print("Hello from %2d out of %2d" % (rank, size))
 
 img_size = 200 * size
 
